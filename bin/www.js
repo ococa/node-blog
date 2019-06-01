@@ -1,6 +1,6 @@
 // server config
 const http = require('http');
-const serverHandle = require('../app');
+const serverHandle = require('../index');
 
 const PORT = 8000;
 
