@@ -6,16 +6,21 @@ const handleUserRouter = (req, res) => {
 	const { method, path } = req;
 
 	// login
-	if (method === 'POST' && path === '/api/user/login') {
+	if (method === 'POST' && path === '/api/user/login/') {
 		const { username, password } = req.body;
-
+		console.log('hhhh')
 		const result = loginController(username, password);
-		if (result) {
-			return new SuccessModel(result);
-		} else {
-			return new ErrorModel('login failed');
-		}
+		return result.then(res => {
+			if (res.username) {
+				return new SuccessModel(res);
+			} else {
+				return new ErrorModel(res);
+			}
+		})
+
 	}
+
+
 
 }
 

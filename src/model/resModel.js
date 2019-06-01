@@ -9,7 +9,9 @@ class BaseModel {
 			data = null;
 			message = null;
 		}
-		if (data) {
+		//
+		if (data || data === false) {
+			console.log(data);
 			this.data = data;
 		}
 		if (message) {
@@ -21,14 +23,14 @@ class BaseModel {
 class SuccessModel extends BaseModel {
 	constructor(data, message) {
 		super(data, message);
-		this.errorNum = 0;
+		this.code = 0;
 	}
 }
 
 class ErrorModel extends BaseModel {
 	constructor(data, message) {
 		super(data, message);
-		this.errorNum = -1;
+		this.errorCode = -1;
 	}
 }
 

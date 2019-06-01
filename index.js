@@ -27,10 +27,6 @@ const getPostData = (req, res) => {
 				resolve({});
 				return;
 			}
-			console.log('typeof postdata', typeof postData);
-			console.log(' postdata', postData);
-			console.log('stringify postdata', JSON.parse(postData))
-
 			resolve(
 				JSON.parse(postData)
 			)
@@ -55,19 +51,36 @@ const serverHandle = (req, res) => {
 	getPostData(req).then(postData => {
 		req.body = postData;
 		// deal with blog router
-		const blogData = handleBlogRouter(req, res);
-		if (blogData) {
-			res.end(
-				JSON.stringify(blogData)
-			)
+		const blogResult = handleBlogRouter(req, res);
+		if (blogResult) {
+			blogResult.then(blogData => {
+				if (blogData) {
+					res.end(
+						JSON.stringify(blogData)
+					)
+				}
+			}).catch(err=> {
+				console.log('err:  ', err, '\n')
+			})
+			return;
 		}
 
+
 		// deal with blog router
-		const userData = handleUserRouter(req, res);
-		if (userData) {
-			res.end(
-				JSON.stringify(userData)
-			)
+		// const userData = handleUserRouter(req, res);
+		// if (userData) {
+		// 	res.end(
+		// 		JSON.stringify(userData)
+		// 	)
+		// }
+		const userResult = handleUserRouter(req, res);
+		if (userResult) {
+			userResult.then(userData => {
+				res.end(
+					JSON.stringify(userData)
+				)
+			})
+			return;
 		}
 
 	})

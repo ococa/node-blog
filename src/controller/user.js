@@ -1,9 +1,9 @@
+const { execSql } = require('../db/mysql');
 const loginController = (username, password) => {
-	console.log(username, password)
-	if (username === 'name' && password === 'false' ) {
-		return false;
-	}
-	return true;
+	let sql = `select username from users where username="${username}" and \`password\` = "${password}"`;
+	return execSql(sql).then(data => {
+		return data[0] || {};
+	})
 }
 
 module.exports = {
