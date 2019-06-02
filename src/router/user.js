@@ -24,17 +24,15 @@ const handleUserRouter = (req, res) => {
 		})
 	}
 
-	// login check
-	if (method === 'GET' && path === '/api/user/login-test') {
-		console.log('session', req.session)
-		if (req.session.username) {
-			return Promise.resolve(new SuccessModel(req.session))
-		} else {
-			return Promise.resolve(new ErrorModel('error'))
-		}
-	}
-
-
+	// // login check
+	// if (method === 'GET' && path === '/api/user/login-test') {
+	// 	console.log('session', req.session)
+	// 	if (req.session.username) {
+	// 		return Promise.resolve(new SuccessModel(req.session))
+	// 	} else {
+	// 		return Promise.resolve(new ErrorModel('error'))
+	// 	}
+	// }
 
 }
 
