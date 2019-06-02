@@ -7,7 +7,7 @@ const handleBlogRouter = (req, res) => {
 	const id = req.query.id;
 
 	// 获取博客列表
-	if (method === 'GET' && path === '/api/blog/list/') {
+	if (method === 'GET' && path === '/api/blog/list') {
 		const {author, keyword} = req.query || '';
 		// result is promise object
 		const result = getList(author, keyword);
@@ -18,7 +18,7 @@ const handleBlogRouter = (req, res) => {
 	}
 
 	// get blog detail
-	if (method === 'GET' && path === '/api/blog/detail/') {
+	if (method === 'GET' && path === '/api/blog/detail') {
 		const result = getDetail(id);
 		return result.then(data => {
 			return new SuccessModel(data);
