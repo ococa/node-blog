@@ -1,6 +1,8 @@
 const { getList, getDetail, newBlog, updateBlog, delBlog } = require('../controller/blog');
 const {ErrorModel, SuccessModel } = require('../model/resModel');
 
+
+
 /**
  * 统一登录验证功能 login check
  * @param {Object} req
@@ -18,8 +20,21 @@ const handleBlogRouter = (req, res) => {
 	const { method,path } = req;
 	const id = req.query.id;
 
+		// 获取博客列表
+		if (method === 'GET' && path === '') {
+			console.log("收到get请求list")
+			const {author, keyword} = req.query || '';
+			// result is promise object
+			const result = getList(author, keyword);
+
+			return result.then(listData => {
+				return new SuccessModel(listData);
+			})
+		}
+
 	// 获取博客列表
 	if (method === 'GET' && path === '/api/blog/list') {
+		console.log("收到get请求list")
 		const {author, keyword} = req.query || '';
 		// result is promise object
 		const result = getList(author, keyword);
