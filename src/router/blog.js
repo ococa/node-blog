@@ -1,6 +1,18 @@
 const { getList, getDetail, newBlog, updateBlog, delBlog } = require('../controller/blog');
 const {ErrorModel, SuccessModel } = require('../model/resModel');
 
+/**
+ * 统一登录验证功能 login check
+ * @param {Object} req
+ * @returns {undefined} 登录情况
+ * @returns {Promise} 未登录情况
+ */
+const loginCheck = (req) => {
+		if (!req.session.username) {
+			return Promise.resolve(new ErrorModel('error 尚未登录'))
+		}
+};
+
 const handleBlogRouter = (req, res) => {
 
 	const { method,path } = req;
@@ -27,7 +39,14 @@ const handleBlogRouter = (req, res) => {
 
 	// create a blog
 	if (method === 'POST' && path === '/api/blog/new') {
-		req.body.author = 'author_1';	// TODO 假数据，待开发登录功能是改为真
+		// req.body.author = 'author_1';	// 假数据，待开发登录功能是改为真
+		const loginCheckResult = loginCheck(req);
+		if (loginCheckResult) {
+			// 尚未登录
+			return loginCheck;
+		}
+		req.body.author = req.session.username;
+
 		const blogData = req.body;
 		const result = newBlog(blogData);
 		return result.then(data => {
@@ -38,7 +57,14 @@ const handleBlogRouter = (req, res) => {
 
 	// update a blog
 	if (method === 'POST' && path === '/api/blog/update') {
-		req.body.author = 'author_1'; // TODO 假数据，待开发登录功能是改为真
+		// req.body.author = 'author_1'; // 假数据，待开发登录功能是改为真
+		const loginCheckResult = loginCheck(req);
+		if (loginCheckResult) {
+			// 尚未登录
+			return loginCheck;
+		}
+		req.body.author = req.session.username;
+
 		const result = updateBlog(id, req.body);
 		return result.then(res => {
 			if (res) {
@@ -52,7 +78,15 @@ const handleBlogRouter = (req, res) => {
 
 	// delete a blog
 	if (method === 'POST' && path === '/api/blog/del') {
-		req.body.author = 'author_1'; // TODO 假数据，待开发登录功能是改为真
+		// req.body.author = 'author_1'; // TODO 假数据，待开发登录功能是改为真
+
+		const loginCheckResult = loginCheck(req);
+		if (loginCheckResult) {
+			// 尚未登录
+			return loginCheck;
+		}
+
+		req.body.author = req.session.username;
 
 		const result = delBlog(id, req.body);
 		return result.then(res => {

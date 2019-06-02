@@ -1,7 +1,10 @@
 const mysql = require('mysql');
 const { MYSQL_CONFIG } = require('../config/db');
 
-
+/**
+ * mysql 操作封装
+ * 返回execSql Function
+ */
 
 // create connection objec 创建连接对象
 const con = mysql.createConnection(MYSQL_CONFIG);
