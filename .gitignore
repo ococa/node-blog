@@ -1,5 +1,8 @@
-.vscode
 
+# vscode&idea config
+.vscode
+.idea
+
+# node_modules
 node_modules
 
-*/config/config.js

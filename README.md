@@ -1,3 +1,0 @@
-# blog-demo based node
-
-#
